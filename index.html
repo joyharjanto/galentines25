@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galentine's 2025 🎀</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Noto Sans';
+            background-color: #ffe6e6;
+            background-image: url('https://www.transparenttextures.com/patterns/gingham.png'); /* Pink gingham pattern */
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: 'Noto Sans';
+            font-size: 28px;
+            color: #d14b6e;
+            letter-spacing: 1px;
+        }
+
+        /* PIN Input Box */
+        .login-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff4d6d;
+            border-radius: 5px;
+            outline: none;
+            text-align: center;
+            width: 150px;
+        }
+
+        .container {
+            position: relative;
+            width: 320px;
+            height: 350px;
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background Card */
+        .background-card {
+            width: 280px;
+            height: 200px;
+            background: #ffefa0;
+            border-radius: 15px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 30px;
+            transform: rotate(-5deg);
+        }
+
+        .photo {
+            position: absolute;
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out, z-index 0.3s ease-in-out;
+        }
+
+        /* First image slanted left */
+        #photo1 {
+            transform: rotate(-8deg);
+            z-index: 2;
+        }
+
+        /* Second image slanted right */
+        #photo2 {
+            transform: rotate(8deg);
+            z-index: 1;
+        }
+
+        /* Button styling */
+        .button-container {
+            display: none; /* Hidden initially */
+            justify-content: center;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: #ff4d6d;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background: #e63e5c;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💖 Happy Valentine's Day 🎀</h1>
+
+    <!-- PIN Input Section -->
+    <div class="login-container" id="login-screen">
+        <input type="text" id="pinInput" placeholder="Enter PIN">
+        <button onclick="checkPIN()">Submit</button>
+    </div>
+
+    <!-- Personal Message & Image Container (Hidden Initially) -->
+    <div class="container" id="photo-container">
+
+        <!-- First Photo -->
+        <img id="photo1" class="photo" src="" alt="First Photo">
+        
+        <!-- Second Photo -->
+        <img id="photo2" class="photo" src="" alt="Second Photo">
+    </div>
+
+    <!-- Swap Button (Hidden Initially) -->
+    <div class="button-container" id="swap-button-container">
+        <button onclick="swapPhotos()">💛💛💛</button>
+    </div>
+
+    <script>
+        let isFirstInFront = true;
+
+        // PIN-based user data
+        const userConfigs = {
+            "feli27": {
+                name: "Feli",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/feli.jpg", "https://joys-galentine.s3.us-east-2.amazonaws.com/feli_msg.jpg"]
+            },
+            "angel24": {
+                name: "Angel",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/angel.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/angel_msg.jpg"]
+            },
+            "helle21": {
+                name: "Helle",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/helle.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/helle_msg.jpg"]
+            },
+            "laura07": {
+                name: "Laura",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/laura.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/laura_msg.jpg"]
+            },
+            "grace08": {
+                name: "Grace",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/grace.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/grace_msg.jpg"]
+            },
+            "odi11": {
+                name: "Odi",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/odi.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/odi_msg.jpg"]
+            },
+            "delle12": {
+                name: "Helle",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/delle.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/delle_msg.jpg"]
+            },
+            "jess02": {
+                name: "Jess",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/jess.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/jess_msg.jpg"]
+            },
+            "jac06": {
+                name: "Jacqueline",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/Jac.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/jac_msg.jpg"]
+            },
+            "tghafar": {
+                name: "Tika",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/Tika.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/tika_msg.jpg"]
+            },
+            "kan08": {
+                name: "Kan",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/kandice.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/kandice_msg.jpg"]
+            },
+            "jasmine04": {
+                name: "Jasmine",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/jasmine.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/jasmine_msg.jpg"]
+            },
+            "gigi24": {
+                name: "Gigi",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/gigi.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/gigi_msg.jpg"]
+            },
+            "melly25": {
+                name: "Melly",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/melly.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/melly_msg.jpg"]
+            },
+            "jinhee11": {
+                name: "Jinhee",
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/jinhee.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/jinhee_msg.jpg"]
+            },
+        };
+
+        function checkPIN() {
+            const pin = document.getElementById("pinInput").value;
+            if (userConfigs[pin]) {
+                const user = userConfigs[pin];
+
+                // Hide login screen
+                document.getElementById("login-screen").style.display = "none";
+
+                // Show the photo container and button
+                document.getElementById("photo-container").style.display = "flex";
+                document.getElementById("swap-button-container").style.display = "flex";
+
+                // Set user-specific images
+                document.getElementById("photo1").src = user.photos[0];
+                document.getElementById("photo2").src = user.photos[1];
+            } else {
+                alert("Invalid PIN! Try again.");
+            }
+        }
+
+        function swapPhotos() {
+            const photo1 = document.getElementById("photo1");
+            const photo2 = document.getElementById("photo2");
+
+            if (isFirstInFront) {
+                photo1.style.zIndex = "1";
+                photo1.style.transform = "rotate(8deg)";
+                photo2.style.zIndex = "2";
+                photo2.style.transform = "rotate(-8deg)";
+            } else {
+                photo1.style.zIndex = "2";
+                photo1.style.transform = "rotate(-8deg)";
+                photo2.style.zIndex = "1";
+                photo2.style.transform = "rotate(8deg)";
+            }
+
+            isFirstInFront = !isFirstInFront;
+        }
+    </script>
+
+</body>
+</html>
