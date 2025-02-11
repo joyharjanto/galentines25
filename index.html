@@ -8,7 +8,7 @@
     <style>
         body {
             text-align: center;
-            font-family: 'Noto Sans', serif;
+            font-family: 'Playfair Display', serif;
             background-color: #ffe6e6;
             display: flex;
             flex-direction: column;
@@ -55,10 +55,10 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-            font-size: 18px;
-            text-align: left;
+            font-size: 16px;
+            text-align: center;
             position: relative;
-            margin-top: 20px;
+            margin-top: 40px; /* Pushed down more to prevent overlap */
         }
 
         .container {
@@ -68,6 +68,7 @@
             position: relative;
             width: 320px;
             height: 250px;
+            margin-top: 20px; /* Added margin to further separate images from text */
         }
 
         .photo {
@@ -79,20 +80,25 @@
         }
 
         #photo1 {
-            transform: rotate(-10deg) translateY(10px);
+            transform: rotate(-10deg) translateY(15px);
             z-index: 2;
         }
 
         #photo2 {
-            transform: rotate(5deg) translateY(-10px);
+            transform: rotate(5deg) translateY(-15px);
             z-index: 1;
         }
 
         .button-container {
             display: none;
-            margin-top: 80px;
+            margin-top: 10px;
+            margin-bottom: 20px; 
             position: relative;
             z-index: 10;
+        }
+
+        img[alt='Galentine\'s Title'] {
+            margin-top: -70px; /* Moves the title image even higher */
         }
 
         button {
@@ -109,7 +115,7 @@
     </style>
 </head>
 <body>
-    <img src="assets/title.png" alt="Galentine's Title" style="width: 300px; max-width: 80%; margin-bottom: 20px;">
+    <img src="assets/title.png" alt="Galentine's Title" style="width: 300px; max-width: 80%;">
 
     <div class="login-container" id="loginScreen">
         <input type="password" id="pinInput" placeholder="Enter PIN">
@@ -121,21 +127,23 @@
         <div class="letter" id="letterText">Dear <span id="userName"></span>, <br> <br>You have a letter from Joy <br> Click on Miffy to open it 💗 <br> <img src="assets/miffy.png" id="miffy"> </div>
     </div>
 
+
+    <div class="button-container" id="swapButtonContainer">
+        <button onclick="swapPhotos()">💛💛💛</button>
+    </div>
     <div class="container" id="photoContainer">
         <img id="photo1" class="photo" src="" alt="First Photo">
         <img id="photo2" class="photo" src="" alt="Second Photo">
     </div>
 
-    <div class="button-container" id="swapButtonContainer">
-        <button onclick="swapPhotos()">💛💛💛</button>
-    </div>
+
 
     <script>
         let isFirstInFront = true;
         const userConfigs = {
             "test123": {
                 name: "Grace",
-                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/grace.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/grace_msg.jpg"]    
+                photos: ["https://joys-galentine.s3.us-east-2.amazonaws.com/test.png", "https://joys-galentine.s3.us-east-2.amazonaws.com/tes_img.png"]    
             },
             "feli27": {
                 name: "Feli",
@@ -229,13 +237,13 @@
             const photo1 = document.getElementById("photo1");
             const photo2 = document.getElementById("photo2");
             if (isFirstInFront) {
-                photo1.style.transform = "rotate(5deg) translateY(-10px)";
-                photo2.style.transform = "rotate(-10deg) translateY(10px)";
+                photo1.style.transform = "rotate(5deg) translateY(-15px)";
+                photo2.style.transform = "rotate(-10deg) translateY(15px)";
                 photo1.style.zIndex = "1";
                 photo2.style.zIndex = "2";
             } else {
-                photo1.style.transform = "rotate(-10deg) translateY(10px)";
-                photo2.style.transform = "rotate(5deg) translateY(-10px)";
+                photo1.style.transform = "rotate(-10deg) translateY(15px)";
+                photo2.style.transform = "rotate(5deg) translateY(-15px)";
                 photo1.style.zIndex = "2";
                 photo2.style.zIndex = "1";
             }
